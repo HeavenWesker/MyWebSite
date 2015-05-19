@@ -10,6 +10,7 @@ module.exports = function(grunt) {
       '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
+    //banner: 'test banner',
     // Task configuration.
     concat: {
       options: {
@@ -27,7 +28,8 @@ module.exports = function(grunt) {
       },
       dist: {
         src: '<%= concat.dist.dest %>',
-        dest: 'dist/<%= pkg.name %>.min.js'
+        //dest: 'dist/<%= pkg.name %>.min.js'
+        dest: 'public/javascripts/global.js'
       }
     },
     jshint: {
@@ -44,8 +46,10 @@ module.exports = function(grunt) {
         boss: true,
         eqnull: true,
         browser: true,
+        devel: true,
         globals: {
-          jQuery: true
+          jQuery: true,
+          $: true
         }
       },
       gruntfile: {
@@ -61,6 +65,7 @@ module.exports = function(grunt) {
     watch: {
       options: {
         livereload: true,
+        //debounceDelay: 5000,
         nospawn: false
       },
       gruntfile: {
@@ -68,19 +73,34 @@ module.exports = function(grunt) {
         tasks: ['jshint:gruntfile']
       },
       lib_test: {
-        files: '<%= jshint.lib_test.src %>',
-        tasks: ['jshint:lib_test', 'qunit']
-      },
-      css: {
-        files: 'sass/custom.scss',
-        tasks: ['sass'],
         options: {
-          livereload: true,
-        }
+          livereload: false,
+          nospawn: false
+        },
+        files: '<%= jshint.lib_test.src %>',
+        //tasks: ['jshint:lib_test', 'qunit']
+        tasks: ['jshint:lib_test']
+      },
+      sass: {
+        files: ['sass/*.scss', 'sass/*.css'],
+        tasks: ['sass']
       },
       jade: {
         files: ['views/*.jade']
+      },
+      concat: {
+        options: {
+          livereload: false,
+          nospawn: false
+        },
+        files: '<%= concat.dist.src %>',
+        tasks: ['concat']
+      },
+      uglify: {
+        files: '<%= uglify.dist.src %>',
+        tasks: ['uglify']
       }
+
     },
     sass: {
       dist: {
