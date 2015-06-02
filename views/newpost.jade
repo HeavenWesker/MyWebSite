@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    h1= title
+    p Add new Post
+    //add post
+    form#addPostForm(method='POST', action='/posts/newpost')
+        textArea#inputPostContent(type='text', name='content', placeHolder='Whatever you want to talk')
+        br
+        button#btnPost(type='submit') Post
+
