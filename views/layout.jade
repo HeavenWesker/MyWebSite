@@ -5,6 +5,16 @@ html
     //link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/custom.css')
   body
+    nav#main-nav
+      ul
+        li#nav-home 
+          a#home(href='/') home
+        li#nav-setting 
+          a#setting(href='#') setting
+        li#profile 
+          a#profile(href='#') profile
+        li#notice
+          a#profile(href='#') notice
     block content
     //script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
     script(src='/javascripts/jquery.min.js')

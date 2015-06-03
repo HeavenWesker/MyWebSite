@@ -5,7 +5,7 @@ block content
     p Add new Post
     //add post
     form#addPostForm(method='POST', action='/posts/newpost')
+        input#inputPostTitle(type='text', name='title', placeHolder='Title')
         textArea#inputPostContent(type='text', name='content', placeHolder='Whatever you want to talk')
-        br
         button#btnPost(type='submit') Post
 

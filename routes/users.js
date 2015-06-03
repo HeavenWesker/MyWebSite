@@ -3,7 +3,7 @@ var BSON = mongodb.BSONPure;
 var express = require('express');
 var router = express.Router();
 var database = require('../modules/database');
-var identityChecker = require('../modules/identityChecker')
+var authorize = require('../modules/authorize')
 
 /* GET users listing. */
 router.get('/userlist', function(req, res, next) {
@@ -28,9 +28,13 @@ router.get('/userlist', function(req, res, next) {
   // //res.send(collection.find({}).toArray());
 });
 router.post('/adduser', function(req, res){
-  identityChecker.saveUserCredit(req.body, function(err, result){
+  authorize.saveUserCredit(req.body, function(err, remember_token, result){
+    if(!err){
+      res.cookie('remember_token', remember_token)
+    }
     res.send(
-    err === null ? { msg: result } : { err: err});
+      err === null ? { msg: result } : { err: err}
+    );
   });
   // console.log(req.body);
   // var db = req.db;

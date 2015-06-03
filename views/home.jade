@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    h1= title
+    p Welcome to #{title}, this is our test site little test test again!!
+    p Home
+
+    #postList
+        for post in postArray
+            //##{post.title}
+            p.post(id='post'+post._id)
+                #postTitle #{post.title}
+                #postContent #{post.content}
+
+
+
