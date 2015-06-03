@@ -2,36 +2,45 @@ var mongodb = require('mongodb');
 var BSON = mongodb.BSONPure;
 var express = require('express');
 var router = express.Router();
+var database = require('../modules/database');
+var identityChecker = require('../modules/identityChecker')
 
 /* GET users listing. */
 router.get('/userlist', function(req, res, next) {
-  var db = req.db;
-  var collection = db.collection('userlist');
-  //collection.find().toArray(function(err, items){
-  //  res.json(items);
-  //});
-  //collection.find({}, {}, function(err, items){
-  //  res.send(items);
-  //  //items.toArray(function(err, items){
-  //  //  res.json(items);
-  //  //});
-  //});
-  collection.find({}).toArray(function(err, data){
-    //console.log(data);
+  database.findAllUser(function(err, data){
     res.send(data);
-  });
-  //res.send(collection.find({}).toArray());
+  })
+  // var db = req.db;
+  // var collection = db.collection('userlist');
+  // //collection.find().toArray(function(err, items){
+  // //  res.json(items);
+  // //});
+  // //collection.find({}, {}, function(err, items){
+  // //  res.send(items);
+  // //  //items.toArray(function(err, items){
+  // //  //  res.json(items);
+  // //  //});
+  // //});
+  // collection.find({}).toArray(function(err, data){
+  //   //console.log(data);
+  //   res.send(data);
+  // });
+  // //res.send(collection.find({}).toArray());
 });
 router.post('/adduser', function(req, res){
-  console.log(req.body);
-  var db = req.db;
-  var collection = db.collection('userlist');
-  collection.insert(req.body, function(err, result){
-    console.log(result);
+  identityChecker.saveUserCredit(req.body, function(err, result){
     res.send(
-      (err === null) ? { msg: result }: { 'err': err.message }
-    );
+    err === null ? { msg: result } : { err: err});
   });
+  // console.log(req.body);
+  // var db = req.db;
+  // var collection = db.collection('userlist');
+  // collection.insert(req.body, function(err, result){
+  //   console.log(result);
+  //   res.send(
+  //     (err === null) ? { msg: result }: { 'err': err.message }
+  //   );
+  // });
 });
 router.delete('/deleteuser/:id', function(req, res, next){
   var db = req.db;

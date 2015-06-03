@@ -8,6 +8,9 @@ router.get('/', function(req, res, next) {
 router.get('/helloworld', function(req, res, next) {
   res.render('helloworld', { title: 'HelloWorld' });
 });
+router.get('/signin', function(req, res, next){
+  res.render('signin', { title: 'Sign In'});
+});
 router.get('/userlist', function(req, res, next){
   var db = req.db;
   var usercollection = db.get('usercollection');

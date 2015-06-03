@@ -4,13 +4,9 @@ block content
     h1= title
     p Welcome to #{title}, this is our test site little test test again!!
 
-    form#signInForm(action="/users/addUser", method="POST")
+    form#signInForm(action="/signin", method="POST")
         input#inputUserName(type="text", placeHolder="UserName", name="username")
-        input#inputUserEmail(type="text", placeHolder="Email", name="email")
         input#inputUserPassword(type="password", placeHolder="Password", name="password")
         button#buttonSubmit(type="submit") Sign Up
-
-    p already a user 
-        a#loginLink(href="/signin") SignIn.
 
 
