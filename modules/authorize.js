@@ -12,9 +12,15 @@ function tokenCheck(remember_token, callback){
 }
 function signinCheck(credit, callback){
   database.findUserByCredit(credit, function(err, user){
-    bcrypt.compare(credit.password, user.password, function(err, res) {
-      callback(err, res, user);
-    });
+    console.log(user == null);
+    console.log(user);
+    if(user == null){
+      callback(err, false, null);
+    }else{
+      bcrypt.compare(credit.password, user.password, function(err, res) {
+        callback(err, res, user);
+      });
+    }
   });
 }
 function saveUserCredit(information, callback){

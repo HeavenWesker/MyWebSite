@@ -51,8 +51,13 @@ function findAllUser(callback){
     callback(err, data);
   });
 }
-function findAllPost(user, targetUser, callback){
-  postCollection.find({}).toArray(function(err, postArray){
+function findAllPost(targetUser, callback){
+  if(targetUser == null){
+    condition = {};
+  }else{
+    condition = {user_id: targetUser._id};
+  }
+  postCollection.find(condition).sort({name: -1}).toArray(function(err, postArray){
     callback(err, postArray);
   })
 }

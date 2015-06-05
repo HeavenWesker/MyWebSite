@@ -1,11 +1,12 @@
 extends layout
 
 block content
-    h1= title
-    p Add new Post
-    //add post
-    form#addPostForm(method='POST', action='/posts/newpost')
-        input#inputPostTitle(type='text', name='title', placeHolder='Title')
-        textArea#inputPostContent(type='text', name='content', placeHolder='Whatever you want to talk')
-        button#btnPost(type='submit') Post
+    #newpost-div
+        h1= title
+        p Add new Post
+        //add post
+        form#addPostForm(method='POST', action='/newpost')
+            input#input-post-title(type='text', name='title', placeHolder='Title')
+            textArea#input-post-title(type='text', name='content', placeHolder='Whatever you want to talk')
+            button#button-submit(type='submit') Post
 

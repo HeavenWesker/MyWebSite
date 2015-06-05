@@ -1,12 +1,16 @@
 extends layout
 
 block content
-    h1= title
-    p Welcome to #{title}, this is our test site little test test again!!
+    #signin-div
+        h1= title
+        //p Welcome to #{title}, this is our test site little test test again!!
+        p#err-message #{error}
 
-    form#signInForm(action="/signin", method="POST")
-        input#inputUserName(type="text", placeHolder="UserName", name="username")
-        input#inputUserPassword(type="password", placeHolder="Password", name="password")
-        button#buttonSubmit(type="submit") Sign Up
+        form#signin-form(action="/signin", method="POST")
+            input#input-username(type="text", placeHolder="UserName", name="username")
+            input#input-user-password(type="password", placeHolder="Password", name="password")
+            button#button-submit(type="submit") Sign In
+        p No account?  
+            a#login-link(href="/signup") Create.
 
 

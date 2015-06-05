@@ -1,0 +1,4 @@
+.post(id='post-'+post._id)
+    img.header-image(src='/images/headers/'+post.header_image+'.png')
+    p.post-title(id='post-title-'+post.title) #{post.title}
+    p.post-date(id='post-date-'+post._id.getTimestamp) #{post._id.getTimestamp().getMonth()+1}-#{post._id.getTimestamp().getDay()} #{post._id.getTimestamp().getHours()}:#{post._id.getTimestamp().getMinutes()}

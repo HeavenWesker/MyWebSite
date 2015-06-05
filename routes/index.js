@@ -5,22 +5,19 @@ var database = require('../modules/database');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  authorize.tokenCheck(req.cookies.remember_token, function(err, user){
+  authorize.tokenCheck(req.cookies.remember_token, function(err, currentUser){
     if(err){
       console.log(err);
       next();
-    }else if(user === null){
-      console.log(user);
-      res.render('index', { title: 'Talk' });
+    }else if(currentUser == null){
+      res.render('index', { title: 'Talk'});
     }else{
-      database.findAllPost(user, null, function(err, postArray){
+      database.findAllPost(null, function(err, postArray){
+        console.log(postArray);
         res.render('home', { title: 'Talk', postArray: postArray });
       });
     }
   });
-});
-router.get('/helloworld', function(req, res, next) {
-  res.render('helloworld', { title: 'HelloWorld' });
 });
 router.get('/signin', function(req, res, next){
   console.log(req.cookies.remember_token);
@@ -28,15 +25,12 @@ router.get('/signin', function(req, res, next){
 });
 router.post('/signin', function(req, res, next){
   authorize.signinCheck(req.body, function(err, result, user){
-    console.log(err);
-    console.log(result);
-    console.log(user);
     if(result){
       authorize.login(user, res, function(){
         res.redirect('/');
       })
     }else{
-      res.render('signin', {});
+      res.render('signin', { title: 'signin', error: 'Username and Password not match'} );
     }
   });
 });
@@ -50,25 +44,46 @@ router.get('/userlist', function(req, res, next){
     //res.send('userList');
   });
 });
-router.get('/newuser', function(req, res, next){
-  res.render('newuser', { title: 'newuser' });
+router.get('/signup', function(req, res, next){
+  res.render('index', { title: 'signup'})
 });
-router.post('/adduser', function(req, res, next){
-  var db = req.db;
-  var usercollection = db.get('usercollection');
-  var userName = req.body.username;
-  var userEmail = req.body.useremail;
-  usercollection.insert({
-    'username' : userName,
-    'useremail' : userEmail
-  }, function(error, doc){
-    if(error){
-      res.send('There are some error with the database');
+//router.get('/newuser', function(req, res, next){
+//  res.render('newuser', { title: 'newuser' });
+//});
+// router.post('/adduser', function(req, res, next){
+//   var db = req.db;
+//   var usercollection = db.get('usercollection');
+//   var userName = req.body.username;
+//   var userEmail = req.body.useremail;
+//   usercollection.insert({
+//     'username' : userName,
+//     'useremail' : userEmail
+//   }, function(error, doc){
+//     if(error){
+//       res.send('There are some error with the database');
+//     }else{
+//       res.location('/userlist');
+//       res.redirect('/userlist');
+//     }
+//   });
+// });
+router.get('/newpost', function(req, res, next){
+  res.render('newpost', {title: 'New Post'});
+});
+router.post('/newpost', function(req, res, next){
+  authorize.tokenCheck(req.cookies.remember_token, function(err, user){
+    if(user === undefined){
+      res.redirect('/signin');
+      res.location('/signin');
     }else{
-      res.location('/userlist');
-      res.redirect('/userlist');
+      req.body.user_id = user._id;
+      database.insertPost(req.body, function(err, result){
+        //res.send( err === null ? { msg: result } : { err: err });
+        //res.render('home');
+        res.redirect('/');
+      });
     }
   });
-});
+})
 
 module.exports = router;

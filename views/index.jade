@@ -1,16 +1,18 @@
 extends layout
 
 block content
-    h1= title
-    p Welcome to #{title}, this is our test site little test test again!!
+    #signup-div
+        h1#signup-title= title
+        //p Welcome to #{title}, this is our test site little test test again!!
+        p Signup in 15 sec.
 
-    form#signInForm(action="/users/addUser", method="POST")
-        input#inputUserName(type="text", placeHolder="UserName", name="username")
-        input#inputUserEmail(type="text", placeHolder="Email", name="email")
-        input#inputUserPassword(type="password", placeHolder="Password", name="password")
-        button#buttonSubmit(type="submit") Sign Up
+        form#signin-form(action="/signin", method="POST")
+            input#input-username(type="text", placeHolder="UserName", name="username")
+            input#input-user-email(type="text", placeHolder="Email", name="email")
+            input#input-user-password(type="password", placeHolder="Password", name="password")
+            button#button-submit(type="submit") Sign Up
 
-    p already a user 
-        a#loginLink(href="/signin") SignIn.
+        p Already have a account 
+            a#login-link(href="/signin") SignIn.
 
 

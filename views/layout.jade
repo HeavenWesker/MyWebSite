@@ -1,21 +1,42 @@
 doctype html
 html
   head
+    meta(name="viewport" content="width=device-width, initial-scale=1")
     title= title
-    //link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/normalize.css')
     link(rel='stylesheet', href='/stylesheets/custom.css')
   body
-    nav#main-nav
-      ul
-        li#nav-home 
-          a#home(href='/') home
-        li#nav-setting 
-          a#setting(href='#') setting
-        li#profile 
-          a#profile(href='#') profile
-        li#notice
-          a#profile(href='#') notice
-    block content
-    //script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
-    script(src='/javascripts/jquery.min.js')
-    script(src='/javascripts/global.js')
+    .container
+      #banner
+      nav#main-nav
+        ul#all
+          li#nav-home 
+            a#home(href='/') home
+          li#nav-setting 
+            a#setting(href='#') setting
+          li#profile 
+            a#profile(href='#') profile
+          li#notice
+            a#profile(href='#') notice
+        ul#signined
+          li
+            div#new-post
+              a#new-post(href='/newpost') 
+          li
+            div#signout
+              a#new-post(href='/signout') 
+      block content
+      #footer
+        ul
+          li
+            span Developed BY Heaven Wesker
+          li
+            a(href='https://twitter.com/HeavenWesker') Twitter
+          li
+            a(href='mailto:Heaven.Wesker@gmail.com') Gmail
+          li
+            span Powered by 
+            a(href='https://nodejs.org') NodeJS
+      //script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+      script(src='/javascripts/jquery.min.js')
+      script(src='/javascripts/global.js')
