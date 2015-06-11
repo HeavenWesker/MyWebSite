@@ -3,4 +3,7 @@ extends layout
 block content
   h1= message
   h2= error.status
+  - if(status === 404){
+      img#error-image(src='/images/error/'+status+'.jpeg')
+  - }
   pre #{error.stack}

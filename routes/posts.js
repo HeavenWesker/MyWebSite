@@ -3,15 +3,30 @@ var router = express.Router();
 var mongodb = require('mongodb');
 var authorize = require('../modules/authorize');
 var database = require('../modules/database');
-var url = 'mongodb://localhost:27017/MyWebSite';
+//var url = 'mongodb://localhost:27017/MyWebSite';
 router.get('/postlist', function(req, res, next){
-  var mongoClient = mongodb.MongoClient;
-  mongoClient.connect(url, function(err, database){
-    var collection = database.collection('postlist');
-    collection.find({}).toArray(function(err, data){
-      res.send(data);
-    });
-  });
+  //var mongoClient = mongodb.MongoClient;
+  //mongoClient.connect(url, function(err, database){
+  //  var collection = database.collection('postlist');
+  //  collection.find({}).toArray(function(err, data){
+  //    res.send(data);
+  //  });
+  //});
+  if(req.currentUser === null){
+    res.send('401');
+  }
+  condition = {};
+  if(req.query.action === 'old' && req.query.oldid !== undefined){
+    condition._id = { $lt: new mongodb.ObjectID(req.query.oldid)  };
+  }else if(req.query.action === 'new' && req.query.newid !== undefined){
+    condition._id = { $gt: new mongodb.ObjectID(req.query.newid)  };
+  }
+  // database.findSomePost(condition, function(err, postArray){
+  //   res.render('home', {title: 'Talk', currentUser: req.currentUser, postArray: postArray });
+  // })
+  database.findSomePost(condition, function(err, postArray){
+    res.send(postArray);
+  })
 });
 router.post('/newpost', function(req, res){
   authorize.tokenCheck(req.cookies.remember_token, function(err, user){

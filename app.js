@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var authorize = require('./modules/authorize')
 
 var mongodb = require('mongodb');
 //var monk = require('monk');
@@ -36,9 +37,23 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next){
-  req.db = db;
-  next();
+  authorize.signinCheck(req.body, function(err, result, currentUser){
+    req.currentUser = currentUser;
+    next();
+  })
 });
+app.use(function(req, res, next){
+  console.log('checkToken');
+  authorize.tokenCheck(req.cookies.remember_token, function(err, currentUser){
+    if(!err){
+      console.log('No Error');
+      console.log(currentUser);
+    }
+    req.currentUser = currentUser;
+    next();
+  })
+  console.log('checkTokenFinished');
+})
 
 
 app.use('/', routes);
@@ -61,6 +76,7 @@ if (app.get('env') === 'development') {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
+      status: err.status,
       error: err
     });
   });

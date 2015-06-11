@@ -18,13 +18,14 @@ html
             a#profile(href='#') profile
           li#notice
             a#profile(href='#') notice
-        ul#signined
-          li
-            div#new-post
-              a#new-post(href='/newpost') 
-          li
-            div#signout
-              a#new-post(href='/signout') 
+        if currentUser != null 
+          ul#signined
+            li
+              div#new-post
+                a#new-post(href='/newpost') 
+            li
+              div#signout
+                a#new-post(href='/signout') 
       block content
       #footer
         ul

@@ -1,4 +1,31 @@
+- var getMonthWord = function(monthInt){
+-   if(monthInt === 0){
+-     return 'Jan';
+-   }else if(monthInt === 1){
+-     return 'Feb';
+-   }else if(monthInt === 2){
+-     return 'Mar';
+-   }else if(monthInt === 3){
+-     return 'Apr';
+-   }else if(monthInt === 4){
+-     return 'May';
+-   }else if(monthInt === 5){
+-     return 'Jun';
+-   }else if(monthInt === 6){
+-     return 'Jul';
+-   }else if(monthInt === 7){
+-     return 'Aug';
+-   }else if(monthInt === 8){
+-     return 'Sep';
+-   }else if(monthInt === 9){
+-     return 'Oct';
+-   }else if(monthInt === 10){
+-     return 'Nov';
+-   }else if(monthInt === 11){
+-     return 'Dec';
+-   }
+- }
 .post(id='post-'+post._id)
     img.header-image(src='/images/headers/'+post.header_image+'.png')
-    p.post-title(id='post-title-'+post.title) #{post.title}
-    p.post-date(id='post-date-'+post._id.getTimestamp) #{post._id.getTimestamp().getMonth()+1}-#{post._id.getTimestamp().getDay()} #{post._id.getTimestamp().getHours()}:#{post._id.getTimestamp().getMinutes()}
+    a.post-title(id='post-title-'+post._id, href='/post/'+post._id) #{post.title}
+    p.post-date(id='post-date-'+post._id) #{post.ISODate.getFullYear()}-#{getMonthWord(post.ISODate.getMonth())}-#{post.ISODate.getDate()}

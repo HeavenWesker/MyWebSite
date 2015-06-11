@@ -1,9 +1,9 @@
 extends layout
 
 block content
-    //h1= title
-    //p Welcome to #{title}, this is our test site little test test again!!
-    //p Home
+    //- h1= title
+    //- p Welcome to #{title}, this is our test site little test test again!!
+    //- p Home
 
     #post-list
         for post in postArray
@@ -12,6 +12,9 @@ block content
         .bounce1
         .bounce2
         .bounce3
-
-
+    form#pageControl(action='/', method='GET')
+        input#new-id-input(type='hidden', name='newid', value= postArray.length > 0 ? postArray[0]._id : null)
+        input#old-id-input(type='hidden', name='oldid', value= postArray.length > 0 ?  postArray[postArray.length-1]._id : null ) 
+        button#next-page(type='submit', name='action', value='new') newer
+        button#prev-page(type='submit', name='action', value='old') older
 

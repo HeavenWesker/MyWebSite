@@ -11,14 +11,15 @@ function tokenCheck(remember_token, callback){
   database.findUserByToken(remember_token, callback);
 }
 function signinCheck(credit, callback){
+  console.log('console');
+  console.log(callback);
   database.findUserByCredit(credit, function(err, user){
-    console.log(user == null);
-    console.log(user);
     if(user == null){
+      console.log('WARRING: user not FOND');
       callback(err, false, null);
     }else{
-      bcrypt.compare(credit.password, user.password, function(err, res) {
-        callback(err, res, user);
+      bcrypt.compare(credit.password, user.password, function(err, result) {
+        callback(err, result, user);
       });
     }
   });

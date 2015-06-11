@@ -29,6 +29,8 @@ function insertUser(information, callback){
 function findUserByCredit(credit, callback){
   userCollection.find({username: credit.username})
   .toArray(function(err, userArray){
+    console.log('userArray');
+    console.log(userArray);
     callback(err, userArray[0]);
   });
 }
@@ -57,9 +59,53 @@ function findAllPost(targetUser, callback){
   }else{
     condition = {user_id: targetUser._id};
   }
-  postCollection.find(condition).sort({name: -1}).toArray(function(err, postArray){
+  postCollection.find(condition).sort({_id: -1}).toArray(function(err, postArray){
     callback(err, postArray);
   })
+}
+function findPost(targetUser, callback){ 
+  return findBundlePost(targetUser, 20, callback);
+}
+function findPostBundle(targetUser, pagesize, callback){
+  condition = {};
+  if(targetUser !== null){
+    condition.user_id = targetUser._id;
+  }else{
+    //condition = {};
+    //condition = {user_id: targetUser._id};
+  }
+  postCollection.find(condition).sort({_id: -1}).limit(pagesize).toArray(function(err, postArray){
+    callback(err, postArray);
+  })
+}
+function findPostBundle(targetUser, pagesize, page, action, releative_id, callback){ // new design
+  postCollection.find(condition).sort({_id: -1}).limit(pagesize).toArray(function(err, postArray){
+    callback(err, postArray);
+  })
+  // condition = {};
+  // if(targetUser !== null){
+  //   condition.user_id = targetUser._id;
+  // }else{
+  //   //condition = {};
+  //   //condition = {user_id: targetUser._id};
+  // }
+  // postCollection.find(condition).sort({_id: -1}).limit(pagesize).toArray(function(err, postArray){
+  //   callback(err, postArray);
+  // })
+}
+function findSomePost(condition, callback){
+  postCollection.find(condition).sort({_id: -1}).limit(20).toArray(function(err, postArray){
+    for(var i = 0; i < postArray.length; i++){
+      postArray[i].ISODate = postArray[i]._id.getTimestamp();
+    }
+    callback(err, postArray);
+  })
+}
+function findPostById(id, callback){
+  //callback(postCollection.findOne({_id: mongodb.ObjectId(id)}))
+  postCollection.find({_id: new mongodb.ObjectId(id)}).toArray(function(err, postArray){
+    callback(err, postArray[0]);
+  });
 }
 database.insertPost = insertPost;
 database.insertUser = insertUser;
@@ -67,4 +113,6 @@ database.findAllUser = findAllUser;
 database.findUserByCredit = findUserByCredit;
 database.findUserByToken = findUserByToken;
 database.findAllPost = findAllPost;
+database.findSomePost = findSomePost;
+database.findPostById = findPostById;
 module.exports = database;

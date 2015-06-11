@@ -1,5 +1,4 @@
 var mongodb = require('mongodb');
-var BSON = mongodb.BSONPure;
 var express = require('express');
 var router = express.Router();
 var database = require('../modules/database');
