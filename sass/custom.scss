@@ -153,12 +153,14 @@ body {
       color: #fff;
     }
   }
+  #post-list, #post-detial-list, #settings-list {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
   #post-list {
     .post{
       position:relative;
       border-bottom: 3px solid #eaeaea;
-      margin-left: 30px;
-      margin-right: 30px;
       overflow: hidden;
       .header-image {
         position:absolute;

@@ -29,7 +29,11 @@ module.exports = function(grunt) {
       dist: {
         src: '<%= concat.dist.dest %>',
         //dest: 'dist/<%= pkg.name %>.min.js'
-        dest: 'public/javascripts/global.js'
+        dest: 'public/javascripts/global.min.js'
+      },
+      home: {
+        src: 'lib/home.js',
+        dest: 'public/javascripts/home.min.js'
       }
     },
     jshint: {

@@ -12,9 +12,10 @@ router.get('/postlist', function(req, res, next){
   //    res.send(data);
   //  });
   //});
-  if(req.currentUser === null){
-    res.send('401');
-  }
+  // if(req.currentUser === null){
+  //   res.send('401');
+  //   next();
+  // }
   condition = {};
   if(req.query.action === 'old' && req.query.oldid !== undefined){
     condition._id = { $lt: new mongodb.ObjectID(req.query.oldid)  };
@@ -24,6 +25,7 @@ router.get('/postlist', function(req, res, next){
   // database.findSomePost(condition, function(err, postArray){
   //   res.render('home', {title: 'Talk', currentUser: req.currentUser, postArray: postArray });
   // })
+  console.log(condition);
   database.findSomePost(condition, function(err, postArray){
     res.send(postArray);
   })

@@ -70,6 +70,16 @@ router.get('/userlist', function(req, res, next){
 router.get('/signup', function(req, res, next){
   res.render('index', { title: 'signup', currentUser: req.currentUser})
 });
+// TODO NOT WORKING
+router.post('/signup', function(req, res, next){
+  authorize.saveUserCredit(req.body, function(err, remember_token, result){
+    if(!err){
+      res.cookie('remember_token', remember_token)
+    }
+    res.location('/');
+    res.redirect('/');
+  });
+});
 //router.get('/newuser', function(req, res, next){
 //  res.render('newuser', { title: 'newuser' });
 //});
@@ -107,6 +117,13 @@ router.post('/newpost', function(req, res, next){
       });
     }
   });
+})
+router.get('/settings', function(req, res, next){
+  if(req.currentUser !== null){
+    res.render('settings', {currentUser: req.currentUser});
+  }else{
+    res.redirect('/');
+  }
 })
 
 module.exports = router;
