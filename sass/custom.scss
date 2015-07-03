@@ -330,3 +330,8 @@ html {
   }
 }
 
+h1.title, p.content {
+  width: 100%;
+  white-space:normal;
+  word-break:break-all;
+}
